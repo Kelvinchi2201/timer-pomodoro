@@ -1,0 +1,80 @@
+---
+import Welcome from '../components/Welcome.astro';
+import Layout from '../layouts/Layout.astro';
+import "../styles/global.css";
+---
+
+<Layout title="Pomodoro Tracker">
+  <main class="min-h-screen bg-slate-900 flex flex-col items-center justify-center text-white font-sans">
+    <h1 class="text-5xl font-bold mb-8 text-blue-500">Pomodoro</h1>
+    
+    <div class="bg-slate-800 p-10 rounded-3xl shadow-2xl text-center w-80 border border-slate-700">
+      <div id="timer" class="text-7xl font-mono mb-8">25:00</div>
+      
+      <div class="flex gap-4 justify-center">
+        <button id="start-btn" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-full font-bold transition">
+          Iniciar
+        </button>
+        <button id="reset-btn" class="bg-slate-600 hover:bg-slate-500 px-6 py-2 rounded-full font-bold transition">
+          Reiniciar
+        </button>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+	
+	let timeleft = 25 * 60;
+	let timeId = null ;
+
+	const timerDisplay = document.querySelector('#timer');
+	const startBtn = document.querySelector('#start-btn');
+	const resetBtn = document.querySelector('#reset-btn');
+	const updateDisplay = () => {
+		if (!timerDisplay) return;
+	const minutes = Math.floor(timeleft / 60);
+	const seconds = timeleft % 60;
+	timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+	}
+
+	const timerStart = () => {
+		if (!startBtn) return;
+		if (timeId) {
+			clearInterval(timeId);
+			timeId = null;
+			startBtn.textContent = 'Continuar';
+            startBtn.classList.replace('bg-orange-600', 'bg-red-600');
+
+		}else {
+     
+      startBtn.textContent = 'Pausar';
+      startBtn.classList.replace('bg-red-600', 'bg-orange-600');
+      
+     timeId = setInterval(() => {
+     timeleft--;
+        updateDisplay();
+        
+        if (timeleft === 0) {
+          clearInterval(timeId);
+          alert("¡Tiempo cumplido! Tómate un descanso.");
+        }
+      }, 1000);
+    }
+  }
+
+  const resetTimer = () => {
+	if (!resetBtn) return;
+	if (!startBtn) return;
+	clearInterval(timeId);
+	timeId = null;
+	timeleft = 25 * 60;
+    updateDisplay();
+    startBtn.textContent = 'Iniciar';
+  }
+  startBtn.addEventListener('click', timerStart);
+  resetBtn.addEventListener('click', resetTimer);
+
+
+
+</script>
