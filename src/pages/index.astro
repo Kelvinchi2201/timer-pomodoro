@@ -71,6 +71,8 @@ import "../styles/global.css";
 	timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 	}
 
+  const bell = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
+
 	const timerStart = () => {
 		if (!startBtn) return;
 		if (timeId) {
@@ -90,11 +92,14 @@ import "../styles/global.css";
         
         if (timeleft === 0) {
           clearInterval(timeId);
+          bell.play();
           alert("¡Tiempo cumplido! Tómate un descanso.");
         }
       }, 1000);
     }
   }
+
+  const bell = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
 
 
   const resetTimer = () => {
