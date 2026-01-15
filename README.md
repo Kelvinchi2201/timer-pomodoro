@@ -1,5 +1,5 @@
 un simple pomodoro timer
 
-https://pomodoro-timer-virid-rho.vercel.app/
+https://timer-pomodoro-zeta.vercel.app/
 
 https://roadmap.sh/projects/pomodoro-timer
